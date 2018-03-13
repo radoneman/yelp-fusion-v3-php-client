@@ -69,8 +69,6 @@ class Yelp
 
         $this->app_id = $app_id;
         $this->app_secret = $app_secret;
-
-        $this->oauth();
     }
 
     /**
@@ -145,8 +143,9 @@ class Yelp
      * @return mixed|boolean
      */
     protected function get($cmd, array $data = [], array $headers = [])
-    {
-        $headers[] = 'Authorization: Bearer ' . $this->access_token;
+    {   
+        $headers = [];
+        $headers[] = 'Authorization: Bearer ' . $this->app_secret;
 
         return $this->exec($this->api_url . $cmd, 'get', $data, $headers);
     }
@@ -163,7 +162,7 @@ class Yelp
      */
     protected function post($cmd, array $data = [], array $headers = [])
     {
-        $headers[] = 'Authorization: Bearer ' . $this->access_token;
+        $headers[] = 'Authorization: Bearer ' . $this->app_secret;
 
         return $this->exec($enpoint, $cmd, 'post', $data, $headers);
     }
@@ -255,3 +254,4 @@ class Yelp
         return $this->last_response;
     }
 }
+?>
